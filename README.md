@@ -10,7 +10,6 @@
 
 <h3 align="center">Jeeves is made for looking to Time-Based Blind SQLInjection through recon.</h3>
 
-<img src="https://cdn.discordapp.com/attachments/897664569323974706/954517164021403718/unknown.png">
 
 ## - Installation & Requirements:
 ```
