@@ -1,6 +1,3 @@
-# Jeeves
-## Jeeves SQLI Finder
-
 <h1 align="center">Jeeves</h1> <br>
 
 <p align="center">
