@@ -10,13 +10,13 @@
 
 ## - Installation & Requirements:
 ```
-> go install github.com/ferreiraklet/jeeves@latest
+> go install github.com/ferreiraklet/Jeeves@latest
 
 OR
 
-> git clone https://github.com/ferreiraklet/jeeves.git
+> git clone https://github.com/ferreiraklet/Jeeves.git
 
-> cd jeeves
+> cd Jeeves
 
 > go build jeeves.go
 
