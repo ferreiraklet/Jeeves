@@ -30,7 +30,7 @@ OR
 ## - Usage & Explanation:
   * In Your recon process, you may find endpoints that can be vulnerable to sql injection,
   
-    * Ex: https://redacted.com/index.php?msg=SameValue
+    * Ex: https://redacted.com/index.php?id=1
 
     <br>
   
@@ -60,7 +60,7 @@ OR
     TIP:
     
     Using with sql payloads wordlist
-    `cat sql_wordlist.txt | while read payload;do echo http://testphp.vulnweb.com/artists.php?artist= | qsreplace $payload | goblind --payload-time 5;done`
+    `cat sql_wordlist.txt | while read payload;do echo http://testphp.vulnweb.com/artists.php?artist= | qsreplace $payload | jeeves --payload-time 5;done`
 
 <br>
 
