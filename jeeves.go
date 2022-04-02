@@ -116,7 +116,11 @@ func getParams(turl string, pTime int, proxy string, headers string) string {
         client := &http.Client{
                 Transport: trans,
         }
-
+	
+	_, err := url.ParseRequestURI(turl)
+        if err != nil{
+                return "ERROR"
+        }
         if proxy != "0" {
             if p, err := url.Parse(proxy); err == nil {
                 trans.Proxy = http.ProxyURL(p)
