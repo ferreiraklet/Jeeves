@@ -90,6 +90,9 @@ OR
     
     Using with sql payloads wordlist
     `cat sql_wordlist.txt | while read payload;do echo http://testphp.vulnweb.com/artists.php?artist= | qsreplace $payload | jeeves --payload-time 5;done`
+    
+    
+    Warn: Does not follow redirects, If the Status Code is diferent than 200, it returns "Need Manual Analisys"
 
 <br>
 
