@@ -11,6 +11,7 @@ import (
         "os"
         "strings"
         "sync"
+        "strconv"
         "time"
 )
 
@@ -23,8 +24,8 @@ func init() {
                      "+=======================================================+",
                      "       --payload-time,      The time from payload",
                      "       --proxy              Send traffic to a proxy",
-                     "       -H, --headers	  Custom Headers",
-		     "       -h                   Show This Help Message",
+                     "       -H, --headers        Custom Headers",
+                     "       -h                   Show This Help Message",
                      "",
                      "+=======================================================+",
                      "",
@@ -115,9 +116,12 @@ func getParams(turl string, pTime int, proxy string, headers string) string {
 
         client := &http.Client{
                 Transport: trans,
+                CheckRedirect: func(req *http.Request, via []*http.Request) error {
+                    return http.ErrUseLastResponse
+                    },
         }
-	
-	_, err := url.ParseRequestURI(turl)
+
+        _, err := url.ParseRequestURI(turl)
         if err != nil{
                 return "ERROR"
         }
@@ -143,8 +147,11 @@ func getParams(turl string, pTime int, proxy string, headers string) string {
 }
 }
 
-        res.Header.Set("Connection", "close")
+        //res.Header.Set("Connection", "close")
         resp, err := client.Do(res)
+        if resp.StatusCode >= 300{
+            scstring := strconv.Itoa(resp.StatusCode)
+            return "\033[1;30mNeed Manual Analisys "+scstring+" - "+turl+"\033[0;0m"}
         // res.Header.Set("User-Agent","Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/97.0.4692.71 Safari/537.36")
         after := time.Now().Second()
 
@@ -156,13 +163,11 @@ func getParams(turl string, pTime int, proxy string, headers string) string {
         if err != nil {
                 return "ERROR"
         }
-
-
+        
         if (after - before) >= pTime{
-                return "\033[1;31mVulnerable To Time-Based SQLI "+turl+"\033[0;0m"
+            return "\033[1;31mVulnerable To Time-Based SQLI "+turl+"\033[0;0m"
         }else{
                 return "\033[1;30mNot Vulnerable to SQLI Time-Based "+turl+"\033[0;0m"
-        }
-
+            }
 
 }
