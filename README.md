@@ -56,10 +56,11 @@ OR
     * Another examples of usage:
   
     
-      ```
+      ```bash
        Usage:
        --payload-time,      The time from payload
        --proxy              Send traffic to a proxy
+       -c                   Set Concurrency
        -H, --headers        Custom Headers
        -h                   Show This Help Message
       ```
