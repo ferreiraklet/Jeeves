@@ -23,6 +23,7 @@ func init() {
                      "Usage:",
                      "+=======================================================+",
                      "       --payload-time,      The time from payload",
+                     "       -c                   Set Concurrency, Default: 50",
                      "       --proxy              Send traffic to a proxy",
                      "       -H, --headers        Custom Headers",
                      "       -h                   Show This Help Message",
@@ -30,7 +31,32 @@ func init() {
                      "+=======================================================+",
                      "",
                 }
+                fmt.Println(`
 
+         /\/\
+        /  \ \
+       / /\ \ \
+       \/ /\/ /
+       / /\/ /\
+      / /\ \/\ \
+     / / /\ \ \ \
+  /\/ / / /\ \ \ \/\
+ /  \/ / /  \ \ \ \ \
+/ /\ \/ /    \ \/\ \ \
+\/ /\/ /      \/ /\/ /
+/ /\/ /\      / /\/ /\
+\ \ \/\ \    / /\ \/ /
+ \ \ \ \ \  / / /\  /
+  \/\ \ \ \/ / / /\/
+     \ \ \ \/ / /
+      \ \/\ \/ /
+       \/ /\/ /
+       / /\/ /\
+       \ \ \/ /
+        \ \  /
+         \/\/
+
+`)
                 fmt.Fprintf(os.Stderr, strings.Join(help, "\n"))
         }
 
@@ -38,6 +64,9 @@ func init() {
 
 func main() {
 
+
+        var concurrency int
+        flag.IntVar(&concurrency, "c", 50, "")
 
         var payloadTime int
         flag.IntVar(&payloadTime, "payload-time", 0,"")
@@ -51,53 +80,55 @@ func main() {
 
         flag.Parse()
 
-        var urls []string
         std := bufio.NewScanner(os.Stdin)
-        for std.Scan() {
-                var line string = std.Text()
-                hline := strings.Replace(line, "%2F", "/", -1)
-                line = hline
-
-                urls = append(urls, line)
-
-        }
+        
+        //buf
+        alvos := make(chan string)
         var wg sync.WaitGroup
-        for _, u := range urls {
+
+        for i:=0;i<concurrency;i++ {
                 wg.Add(1)
-                go func(url string) {
+                go func() {
 
                      defer wg.Done()
-
-                     if proxy != ""{
+                     for alvo := range alvos{
+                        if proxy != ""{
                             if headers != ""{
-                                x := getParams(url, payloadTime, proxy, headers)
+                                x := getParams(alvo, payloadTime, proxy, headers)
                                 if x != "ERROR" {
                                     fmt.Println(x)
                                                 }
                             }else{
-                                x := getParams(url, payloadTime, proxy, "0")
+                                x := getParams(alvo, payloadTime, proxy, "0")
                                 if x != "ERROR" {
                                     fmt.Println(x)
                             }
                             }
-                    }else{
+                        }else{
                                 if headers != ""{
-                                    x := getParams(url, payloadTime, "0", headers)
+                                    x := getParams(alvo, payloadTime, "0", headers)
                                     if x != "ERROR" {
                                         fmt.Println(x)
                                                     }
                                 }else{
-                                        x := getParams(url, payloadTime, "0", "0")
+                                        x := getParams(alvo, payloadTime, "0", "0")
                                         if x != "ERROR" {
                                             fmt.Println(x)
                                                         }
                                     }
 
                             }
+                        }
 
-                }(u)
+                }()
         }
 
+        for std.Scan() {
+            var line string = std.Text()
+            alvos <- line
+
+        }
+        close(alvos)
         wg.Wait()
 
 }
@@ -165,9 +196,9 @@ func getParams(turl string, pTime int, proxy string, headers string) string {
         }
         
         if (after - before) >= pTime{
-            return "\033[1;31mVulnerable To Time-Based SQLI "+turl+"\033[0;0m"
+            return "\033[1;31mVulnerable To TB SQLI "+turl+"\033[0;0m"
         }else{
-                return "\033[1;30mNot Vulnerable to SQLI Time-Based "+turl+"\033[0;0m"
+                return "\033[1;30mNot Vulnerable "+turl+"\033[0;0m"
             }
 
 }
