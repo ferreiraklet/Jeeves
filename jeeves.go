@@ -152,7 +152,7 @@ func getParams(turl string, pTime int, proxy string, headers string) string {
                     },
         }
 
-        _, err := url.ParseRequestURI(turl)
+        _, err := url.Parse(turl)
         if err != nil{
                 return "ERROR"
         }
