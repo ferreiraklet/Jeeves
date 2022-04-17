@@ -85,7 +85,7 @@ OR
     
     You can specify more than one header, OBS: Be careful, the syntax must be exact the same, Ex:
     
-    Ex 5 - `echo "http://testphp.vulnweb.com/artists.php?artist=" | qsreplace "(select(0)from(select(sleep(5)))v)" | jeeves --payload-time 5 --proxy -H "Testing: testing;OtherHeader: Value;Other2: Value"`
+    Ex 5 - `echo "http://testphp.vulnweb.com/artists.php?artist=" | qsreplace "(select(0)from(select(sleep(5)))v)" | jeeves --payload-time 5 -H "Testing: testing;OtherHeader: Value;Other2: Value"`
     
     TIP:
     
