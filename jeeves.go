@@ -81,7 +81,7 @@ func main() {
         flag.Parse()
 
         std := bufio.NewScanner(os.Stdin)
-        
+
         //buf
         alvos := make(chan string)
         var wg sync.WaitGroup
@@ -92,32 +92,19 @@ func main() {
 
                      defer wg.Done()
                      for alvo := range alvos{
-                        if proxy != ""{
-                            if headers != ""{
-                                x := getParams(alvo, payloadTime, proxy, headers)
-                                if x != "ERROR" {
-                                    fmt.Println(x)
-                                                }
-                            }else{
-                                x := getParams(alvo, payloadTime, proxy, "0")
-                                if x != "ERROR" {
-                                    fmt.Println(x)
-                            }
-                            }
-                        }else{
-                                if headers != ""{
-                                    x := getParams(alvo, payloadTime, "0", headers)
-                                    if x != "ERROR" {
-                                        fmt.Println(x)
-                                                    }
-                                }else{
-                                        x := getParams(alvo, payloadTime, "0", "0")
-                                        if x != "ERROR" {
-                                            fmt.Println(x)
-                                                        }
-                                    }
+                        
+                        if !strings.HasPrefix(alvo, "http"){
+                            continue
+                        }
+                        _, err := url.Parse(alvo)
+                        if err != nil{
+                            continue
+                        }
 
-                            }
+                        x := getParams(alvo, payloadTime, proxy, headers)
+                        if x != "ERROR" {
+                            fmt.Println(x)
+                                        }
                         }
 
                 }()
@@ -152,11 +139,8 @@ func getParams(turl string, pTime int, proxy string, headers string) string {
                     },
         }
 
-        _, err := url.Parse(turl)
-        if err != nil{
-                return "ERROR"
-        }
-        if proxy != "0" {
+        
+        if proxy != "" {
             if p, err := url.Parse(proxy); err == nil {
                 trans.Proxy = http.ProxyURL(p)
         }
@@ -165,18 +149,18 @@ func getParams(turl string, pTime int, proxy string, headers string) string {
         before := time.Now().Second()
         res, err := http.NewRequest("GET", turl, nil)
 
-        if headers != "0"{
+        if headers != ""{
             if strings.Contains(headers, ";"){
                     parts := strings.Split(headers, ";")
                     for _, q := range parts{
                         separatedHeader := strings.Split(q,":")
                         res.Header.Set(separatedHeader[0],separatedHeader[1])
+                                    }
+        }else{
+            sHeader := strings.Split(headers,":")
+            res.Header.Set(sHeader[0], sHeader[1])
         }
-}else{
-    sHeader := strings.Split(headers,":")
-    res.Header.Set(sHeader[0], sHeader[1])
-}
-}
+        }
 
         //res.Header.Set("Connection", "close")
         resp, err := client.Do(res)
@@ -194,11 +178,11 @@ func getParams(turl string, pTime int, proxy string, headers string) string {
         if err != nil {
                 return "ERROR"
         }
-        
+
         if (after - before) >= pTime{
-            return "\033[1;31mVulnerable To TB SQLI "+turl+"\033[0;0m"
+            return "\033[1;31mVulnerable To Time-Based SQLI "+turl+"\033[0;0m"
         }else{
-                return "\033[1;30mNot Vulnerable "+turl+"\033[0;0m"
+                return "\033[1;30mNot Vulnerable to SQLI Time-Based "+turl+"\033[0;0m"
             }
 
 }
