@@ -93,7 +93,9 @@ OR
     `cat sql_wordlist.txt | while read payload;do echo http://testphp.vulnweb.com/artists.php?artist= | qsreplace $payload | jeeves --payload-time 5;done`
     
     
-    Warn: Does not follow redirects, If the Status Code is diferent than 200, it returns "Need Manual Analisys"
+    OBS: 
+    * Does not follow redirects, If the Status Code is diferent than 200, it returns "Need Manual Analisys"
+    * Jeeves does not http probing, he is not able to do requests to urls that does not contain protocol ( http://, https:// )
 
 <br>
 
