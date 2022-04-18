@@ -69,7 +69,7 @@ func main() {
         flag.IntVar(&concurrency, "c", 50, "")
 
         var payloadTime int
-        flag.IntVar(&payloadTime, "payload-time", 0,"")
+        flag.IntVar(&payloadTime, "payload-time", 5,"")
 
         var proxy string
         flag.StringVar(&proxy,"proxy","","")
